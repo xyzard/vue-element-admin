@@ -38,15 +38,29 @@ export default {
       device: state => state.app.device,
       showSettings: state => state.settings.showSettings,
       needTagsView: state => state.settings.tagsView,
-      fixedHeader: state => state.settings.fixedHeader
+      fixedHeader: state => state.settings.fixedHeader,
+      darkMode: state => state.settings.darkMode
     }),
     classObj() {
       return {
         hideSidebar: !this.sidebar.opened,
         openSidebar: this.sidebar.opened,
         withoutAnimation: this.sidebar.withoutAnimation,
-        mobile: this.device === 'mobile'
+        mobile: this.device === 'mobile',
+        'dark-theme': this.darkMode
       }
+    }
+  },
+  watch: {
+    darkMode: {
+      handler(val) {
+        if (val) {
+          document.body.classList.add('dark-theme')
+        } else {
+          document.body.classList.remove('dark-theme')
+        }
+      },
+      immediate: true
     }
   },
   methods: {

@@ -12,6 +12,12 @@
 
         <screenfull id="screenfull" class="right-menu-item hover-effect" />
 
+        <el-tooltip :content="darkMode ? 'Light Mode' : 'Dark Mode'" effect="dark" placement="bottom">
+          <div class="right-menu-item hover-effect dark-mode-toggle" @click="toggleDarkMode">
+            <svg-icon :icon-class="darkMode ? 'sun' : 'moon'" />
+          </div>
+        </el-tooltip>
+
         <el-tooltip content="Global Size" effect="dark" placement="bottom">
           <size-select id="size-select" class="right-menu-item hover-effect" />
         </el-tooltip>
@@ -68,11 +74,20 @@ export default {
       'sidebar',
       'avatar',
       'device'
-    ])
+    ]),
+    darkMode() {
+      return this.$store.state.settings.darkMode
+    }
   },
   methods: {
     toggleSideBar() {
       this.$store.dispatch('app/toggleSideBar')
+    },
+    toggleDarkMode() {
+      this.$store.dispatch('settings/changeSetting', {
+        key: 'darkMode',
+        value: !this.darkMode
+      })
     },
     async logout() {
       await this.$store.dispatch('user/logout')
@@ -137,6 +152,10 @@ export default {
           background: rgba(0, 0, 0, .025)
         }
       }
+    }
+
+    .dark-mode-toggle {
+      font-size: 20px;
     }
 
     .avatar-container {

@@ -4,6 +4,11 @@
       <h3 class="drawer-title">Page style setting</h3>
 
       <div class="drawer-item">
+        <span>Dark Mode</span>
+        <el-switch v-model="darkMode" class="drawer-switch" active-color="#0f3460" inactive-color="#dcdfe6" />
+      </div>
+
+      <div class="drawer-item">
         <span>Theme Color</span>
         <theme-picker style="float: right;height: 26px;margin: -3px 8px 0 0;" @change="themeChange" />
       </div>
@@ -36,6 +41,17 @@ export default {
     return {}
   },
   computed: {
+    darkMode: {
+      get() {
+        return this.$store.state.settings.darkMode
+      },
+      set(val) {
+        this.$store.dispatch('settings/changeSetting', {
+          key: 'darkMode',
+          value: val
+        })
+      }
+    },
     fixedHeader: {
       get() {
         return this.$store.state.settings.fixedHeader

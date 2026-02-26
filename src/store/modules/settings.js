@@ -3,12 +3,15 @@ import defaultSettings from '@/settings'
 
 const { showSettings, tagsView, fixedHeader, sidebarLogo } = defaultSettings
 
+const storedDarkMode = localStorage.getItem('darkMode')
+
 const state = {
   theme: variables.theme,
   showSettings: showSettings,
   tagsView: tagsView,
   fixedHeader: fixedHeader,
-  sidebarLogo: sidebarLogo
+  sidebarLogo: sidebarLogo,
+  darkMode: storedDarkMode === null ? false : storedDarkMode === 'true'
 }
 
 const mutations = {
@@ -23,6 +26,9 @@ const mutations = {
 const actions = {
   changeSetting({ commit }, data) {
     commit('CHANGE_SETTING', data)
+    if (data.key === 'darkMode') {
+      localStorage.setItem('darkMode', data.value)
+    }
   }
 }
 
